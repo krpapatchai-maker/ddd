@@ -1,5 +1,5 @@
 -- ========================================================
--- Mobile-Friendly Sidebar Menu UI (5 Menu Slots)
+-- Mobile-Friendly Sidebar Menu UI (5 Menu Slots - No Border)
 -- ========================================================
 
 local ScreenGui = Instance.new("ScreenGui")
@@ -48,7 +48,7 @@ OpenBtnStroke.Color = Color3.fromRGB(120, 90, 255)
 OpenBtnStroke.Thickness = 2
 OpenBtnStroke.Parent = OpenBtn
 
--- 2. กรอบ UI หลัก (ขยายให้ใหญ่ขึ้นเพื่อให้เห็นชัดเจนบนมือถือ)
+-- 2. กรอบ UI หลัก
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 25)
@@ -76,7 +76,7 @@ TitleText.BackgroundTransparency = 1
 TitleText.Position = UDim2.new(0.04, 0, 0, 0)
 TitleText.Size = UDim2.new(0.7, 0, 1, 0)
 TitleText.Font = Enum.Font.GothamBold
-TitleText.Text = "⚡ LARGE SIDEBAR HUB"
+TitleText.Text = "เทสHUB"
 TitleText.TextColor3 = Color3.fromRGB(255, 255, 255)
 TitleText.TextSize = 14
 TitleText.TextXAlignment = Enum.TextXAlignment.Left
@@ -90,7 +90,7 @@ CloseBtn.Text = "✕"
 CloseBtn.TextColor3 = Color3.fromRGB(255, 90, 90)
 CloseBtn.TextSize = 16
 
--- 4. เมนูด้านซ้าย (Sidebar สำหรับใส่ 5 ช่อง)
+-- 4. เมนูด้านซ้าย
 Sidebar.Parent = MainFrame
 Sidebar.BackgroundTransparency = 1
 Sidebar.Position = UDim2.new(0, 0, 0, 42)
@@ -118,17 +118,16 @@ ContentCorner.CornerRadius = UDim.new(0, 10)
 ContentCorner.Parent = ContentContainer
 
 -- ========================================================
--- ฟังก์ชั่นสร้างปุ่มเมนูด้านซ้าย (ล็อกไว้ 5 ช่องพอดีตามต้องการ)
+-- ฟังก์ชั่นสร้างปุ่มเมนูด้านซ้าย (ไม่มีเส้นขอบ)
 -- ========================================================
 
 local function CreateMenuTab(name, callback)
     local TabButton = Instance.new("TextButton")
     local TabCorner = Instance.new("UICorner")
-    local TabStroke = Instance.new("UIStroke")
 
     TabButton.Parent = Sidebar
     TabButton.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
-    TabButton.Size = UDim2.new(1, -10, 0, 38) -- ช่องใหญ่กำลังดี กดง่าย
+    TabButton.Size = UDim2.new(1, -10, 0, 38)
     TabButton.Font = Enum.Font.GothamSemibold
     TabButton.Text = name
     TabButton.TextColor3 = Color3.fromRGB(220, 220, 220)
@@ -136,10 +135,6 @@ local function CreateMenuTab(name, callback)
 
     TabCorner.CornerRadius = UDim.new(0, 8)
     TabCorner.Parent = TabButton
-
-    TabStroke.Color = Color3.fromRGB(60, 60, 90)
-    TabStroke.Thickness = 1
-    TabStroke.Parent = TabButton
 
     TabButton.MouseButton1Click:Connect(function()
         pcall(callback)
@@ -159,7 +154,7 @@ OpenBtn.MouseButton1Click:Connect(function()
 end)
 
 -- ========================================================
--- สร้างเมนูด้านซ้าย 5 ช่อง (คุณสามารถเปลี่ยนชื่อและใส่โค้ดเองได้เลย)
+-- สร้างเมนูด้านซ้าย 5 ช่อง
 -- ========================================================
 
 CreateMenuTab("📌 เมนูที่ 1", function()
