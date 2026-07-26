@@ -1,0 +1,183 @@
+-- ========================================================
+-- Mobile-Friendly Sidebar Menu UI (5 Menu Slots)
+-- ========================================================
+
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local UIStroke = Instance.new("UIStroke")
+local TitleBar = Instance.new("Frame")
+local TitleText = Instance.new("TextLabel")
+local CloseBtn = Instance.new("TextButton")
+
+-- Sidebar (แถบเมนูด้านซ้าย 5 ช่อง)
+local Sidebar = Instance.new("ScrollingFrame")
+local SidebarLayout = Instance.new("UIListLayout")
+local SidebarPadding = Instance.new("UIPadding")
+
+-- Container (พื้นที่แสดงผลด้านขวา)
+local ContentContainer = Instance.new("Frame")
+
+-- ปุ่มเปิด/ปิด UI (Floating Button)
+local OpenBtn = Instance.new("TextButton")
+local OpenBtnCorner = Instance.new("UICorner")
+local OpenBtnStroke = Instance.new("UIStroke")
+
+-- ตั้งค่า ScreenGui
+ScreenGui.Name = "SidebarHubGUI"
+ScreenGui.Parent = game.CoreGui or game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ResetOnSpawn = false
+
+-- 1. ปุ่มเปิด/ปิด (ลากไปมาได้)
+OpenBtn.Name = "OpenButton"
+OpenBtn.Parent = ScreenGui
+OpenBtn.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+OpenBtn.Position = UDim2.new(0.02, 0, 0.15, 0)
+OpenBtn.Size = UDim2.new(0, 50, 0, 50)
+OpenBtn.Font = Enum.Font.GothamBold
+OpenBtn.Text = "📂"
+OpenBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+OpenBtn.TextSize = 22
+OpenBtn.Active = true
+OpenBtn.Draggable = true
+
+OpenBtnCorner.CornerRadius = UDim.new(0, 14)
+OpenBtnCorner.Parent = OpenBtn
+
+OpenBtnStroke.Color = Color3.fromRGB(120, 90, 255)
+OpenBtnStroke.Thickness = 2
+OpenBtnStroke.Parent = OpenBtn
+
+-- 2. กรอบ UI หลัก (ขยายให้ใหญ่ขึ้นเพื่อให้เห็นชัดเจนบนมือถือ)
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 25)
+MainFrame.BackgroundTransparency = 0.1
+MainFrame.Position = UDim2.new(0.5, -210, 0.5, -135)
+MainFrame.Size = UDim2.new(0, 420, 0, 270)
+MainFrame.ClipsDescendants = true
+MainFrame.Active = true
+MainFrame.Draggable = true
+
+UICorner.CornerRadius = UDim.new(0, 16)
+UICorner.Parent = MainFrame
+
+UIStroke.Color = Color3.fromRGB(100, 80, 255)
+UIStroke.Thickness = 2
+UIStroke.Parent = MainFrame
+
+-- 3. แถบหัวข้อ (Title Bar)
+TitleBar.Parent = MainFrame
+TitleBar.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+TitleBar.Size = UDim2.new(1, 0, 0, 38)
+
+TitleText.Parent = TitleBar
+TitleText.BackgroundTransparency = 1
+TitleText.Position = UDim2.new(0.04, 0, 0, 0)
+TitleText.Size = UDim2.new(0.7, 0, 1, 0)
+TitleText.Font = Enum.Font.GothamBold
+TitleText.Text = "⚡ LARGE SIDEBAR HUB"
+TitleText.TextColor3 = Color3.fromRGB(255, 255, 255)
+TitleText.TextSize = 14
+TitleText.TextXAlignment = Enum.TextXAlignment.Left
+
+CloseBtn.Parent = TitleBar
+CloseBtn.BackgroundTransparency = 1
+CloseBtn.Position = UDim2.new(0.88, 0, 0, 0)
+CloseBtn.Size = UDim2.new(0.12, 0, 1, 0)
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.Text = "✕"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 90, 90)
+CloseBtn.TextSize = 16
+
+-- 4. เมนูด้านซ้าย (Sidebar สำหรับใส่ 5 ช่อง)
+Sidebar.Parent = MainFrame
+Sidebar.BackgroundTransparency = 1
+Sidebar.Position = UDim2.new(0, 0, 0, 42)
+Sidebar.Size = UDim2.new(0, 130, 1, -42)
+Sidebar.CanvasSize = UDim2.new(0, 0, 0, 0)
+Sidebar.ScrollBarThickness = 2
+
+SidebarLayout.Parent = Sidebar
+SidebarLayout.SortOrder = Enum.SortOrder.LayoutOrder
+SidebarLayout.Padding = UDim.new(0, 8)
+
+SidebarPadding.Parent = Sidebar
+SidebarPadding.PaddingLeft = UDim.new(0, 10)
+SidebarPadding.PaddingTop = UDim.new(0, 10)
+
+-- 5. พื้นที่หน้าจอแสดงผลด้านขวา
+ContentContainer.Parent = MainFrame
+ContentContainer.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+ContentContainer.BackgroundTransparency = 0.5
+ContentContainer.Position = UDim2.new(0, 138, 0, 48)
+ContentContainer.Size = UDim2.new(0, 268, 1, -58)
+
+local ContentCorner = Instance.new("UICorner")
+ContentCorner.CornerRadius = UDim.new(0, 10)
+ContentCorner.Parent = ContentContainer
+
+-- ========================================================
+-- ฟังก์ชั่นสร้างปุ่มเมนูด้านซ้าย (ล็อกไว้ 5 ช่องพอดีตามต้องการ)
+-- ========================================================
+
+local function CreateMenuTab(name, callback)
+    local TabButton = Instance.new("TextButton")
+    local TabCorner = Instance.new("UICorner")
+    local TabStroke = Instance.new("UIStroke")
+
+    TabButton.Parent = Sidebar
+    TabButton.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+    TabButton.Size = UDim2.new(1, -10, 0, 38) -- ช่องใหญ่กำลังดี กดง่าย
+    TabButton.Font = Enum.Font.GothamSemibold
+    TabButton.Text = name
+    TabButton.TextColor3 = Color3.fromRGB(220, 220, 220)
+    TabButton.TextSize = 12
+
+    TabCorner.CornerRadius = UDim.new(0, 8)
+    TabCorner.Parent = TabButton
+
+    TabStroke.Color = Color3.fromRGB(60, 60, 90)
+    TabStroke.Thickness = 1
+    TabStroke.Parent = TabButton
+
+    TabButton.MouseButton1Click:Connect(function()
+        pcall(callback)
+    end)
+end
+
+-- ========================================================
+-- ระบบเปิด-ปิด UI หลัก
+-- ========================================================
+
+CloseBtn.MouseButton1Click:Connect(function()
+    MainFrame.Visible = false
+end)
+
+OpenBtn.MouseButton1Click:Connect(function()
+    MainFrame.Visible = not MainFrame.Visible
+end)
+
+-- ========================================================
+-- สร้างเมนูด้านซ้าย 5 ช่อง (คุณสามารถเปลี่ยนชื่อและใส่โค้ดเองได้เลย)
+-- ========================================================
+
+CreateMenuTab("📌 เมนูที่ 1", function()
+    print("กดเมนูที่ 1")
+end)
+
+CreateMenuTab("📌 เมนูที่ 2", function()
+    print("กดเมนูที่ 2")
+end)
+
+CreateMenuTab("📌 เมนูที่ 3", function()
+    print("กดเมนูที่ 3")
+end)
+
+CreateMenuTab("📌 เมนูที่ 4", function()
+    print("กดเมนูที่ 4")
+end)
+
+CreateMenuTab("📌 เมนูที่ 5", function()
+    print("กดเมนูที่ 5")
+end)
