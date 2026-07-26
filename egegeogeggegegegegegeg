@@ -35,7 +35,7 @@ OpenBtn.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
 OpenBtn.Position = UDim2.new(0.02, 0, 0.15, 0)
 OpenBtn.Size = UDim2.new(0, 50, 0, 50)
 OpenBtn.Font = Enum.Font.GothamBold
-OpenBtn.Text = "📂"
+OpenBtn.Text = "v2"
 OpenBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 OpenBtn.TextSize = 22
 OpenBtn.Active = true
@@ -66,10 +66,11 @@ UIStroke.Color = Color3.fromRGB(100, 80, 255)
 UIStroke.Thickness = 2
 UIStroke.Parent = MainFrame
 
--- 3. แถบหัวข้อ (Title Bar)
+-- 3. แถบหัวข้อ (Title Bar - เอาขอบออกเรียบร้อย)
 TitleBar.Parent = MainFrame
 TitleBar.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
 TitleBar.Size = UDim2.new(1, 0, 0, 38)
+TitleBar.BorderSizePixel = 0 -- เอาขอบสีเหลี่ยมออก
 
 TitleText.Parent = TitleBar
 TitleText.BackgroundTransparency = 1
