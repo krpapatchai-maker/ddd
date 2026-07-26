@@ -1,5 +1,5 @@
 -- ========================================================
--- Mobile-Friendly Sidebar Menu UI (5 Menu Slots - No Border)
+-- Mobile-Friendly Sidebar Menu UI (Rounded Header)
 -- ========================================================
 
 local ScreenGui = Instance.new("ScreenGui")
@@ -35,7 +35,7 @@ OpenBtn.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
 OpenBtn.Position = UDim2.new(0.02, 0, 0.15, 0)
 OpenBtn.Size = UDim2.new(0, 50, 0, 50)
 OpenBtn.Font = Enum.Font.GothamBold
-OpenBtn.Text = "v2"
+OpenBtn.Text = "📂"
 OpenBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 OpenBtn.TextSize = 22
 OpenBtn.Active = true
@@ -66,11 +66,23 @@ UIStroke.Color = Color3.fromRGB(100, 80, 255)
 UIStroke.Thickness = 2
 UIStroke.Parent = MainFrame
 
--- 3. แถบหัวข้อ (Title Bar - เอาขอบออกเรียบร้อย)
+-- 3. แถบหัวข้อ (Title Bar - ทำมุมโค้งด้านบนให้เข้ากับกรอบหลัก ไม่ให้มีเหลี่ยมแหลม)
 TitleBar.Parent = MainFrame
 TitleBar.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
 TitleBar.Size = UDim2.new(1, 0, 0, 38)
-TitleBar.BorderSizePixel = 0 -- เอาขอบสีเหลี่ยมออก
+TitleBar.BorderSizePixel = 0
+
+local TitleBarCorner = Instance.new("UICorner")
+TitleBarCorner.CornerRadius = UDim.new(0, 16)
+TitleBarCorner.Parent = TitleBar
+
+-- ตัวปิดมุมเหลี่ยมด้านล่างของ TitleBar ให้เรียบเสมอกัน
+local TitleBarCover = Instance.new("Frame")
+TitleBarCover.Parent = TitleBar
+TitleBarCover.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+TitleBarCover.BorderSizePixel = 0
+TitleBarCover.Position = UDim2.new(0, 0, 0.5, 0)
+TitleBarCover.Size = UDim2.new(1, 0, 0.5, 0)
 
 TitleText.Parent = TitleBar
 TitleText.BackgroundTransparency = 1
@@ -81,6 +93,7 @@ TitleText.Text = "เทสHUB"
 TitleText.TextColor3 = Color3.fromRGB(255, 255, 255)
 TitleText.TextSize = 14
 TitleText.TextXAlignment = Enum.TextXAlignment.Left
+TitleText.ZIndex = 2
 
 CloseBtn.Parent = TitleBar
 CloseBtn.BackgroundTransparency = 1
@@ -90,6 +103,7 @@ CloseBtn.Font = Enum.Font.GothamBold
 CloseBtn.Text = "✕"
 CloseBtn.TextColor3 = Color3.fromRGB(255, 90, 90)
 CloseBtn.TextSize = 16
+CloseBtn.ZIndex = 2
 
 -- 4. เมนูด้านซ้าย
 Sidebar.Parent = MainFrame
